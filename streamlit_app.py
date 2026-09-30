@@ -5,7 +5,7 @@ import json
 st.set_page_config(page_title="AML Copilot", page_icon="🛡️", layout="wide")
 
 # Works on both Streamlit Community Cloud (via secrets.toml) and SiS (built-in connection)
-conn = st.connection("snowflake", type="snowflake")
+conn = st.connection("snowflake")
 
 DB = "AML_COPILOT_DB"
 SCHEMA = "RISK_ENGINE"
