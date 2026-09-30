@@ -1,0 +1,12 @@
+# Byte-compiled / cached
+__pycache__/
+*.py[cod]
+
+# Streamlit secrets (NEVER commit this)
+.streamlit/secrets.toml
+
+# Snowflake CLI output
+output/
+
+# OS
+.DS_Store

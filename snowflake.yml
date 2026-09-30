@@ -1,0 +1,13 @@
+definition_version: 2
+entities:
+  aml_copilot:
+    type: streamlit
+    identifier:
+      name: AML_COPILOT_DASHBOARD
+      schema: RISK_ENGINE
+      database: AML_COPILOT_DB
+    title: "AML Copilot - Risk & Fraud Intelligence"
+    query_warehouse: COMPUTE_WH
+    main_file: streamlit_app.py
+    pages_dir: null
+    stage: AML_COPILOT_DB.RISK_ENGINE.STREAMLIT_STAGE
