@@ -4,8 +4,37 @@ import json
 
 st.set_page_config(page_title="AML Copilot", page_icon="🛡️", layout="wide")
 
-# Works on both Streamlit Community Cloud (via secrets.toml) and SiS (built-in connection)
-conn = st.connection("snowflake")
+# --- Snowflake connection with pre-flight check ---
+REQUIRED_KEYS = ["account", "user", "password", "warehouse", "database", "schema"]
+
+try:
+    sf_secrets = st.secrets["connections"]["snowflake"]
+    missing = [k for k in REQUIRED_KEYS if k not in sf_secrets]
+    if missing:
+        st.error(
+            f"Snowflake connection is misconfigured. "
+            f"Missing keys in [connections.snowflake]: {', '.join(missing)}. "
+            f"Add them in Streamlit Cloud > Settings > Secrets."
+        )
+        st.stop()
+except (KeyError, FileNotFoundError):
+    st.error(
+        "Snowflake secrets not found. "
+        "In Streamlit Cloud, go to Settings > Secrets and add:\n\n"
+        "```toml\n"
+        "[connections.snowflake]\n"
+        'account = "your_account"\n'
+        'user = "your_user"\n'
+        'password = "your_password"\n'
+        'role = "your_role"\n'
+        'warehouse = "your_warehouse"\n'
+        'database = "AML_COPILOT_DB"\n'
+        'schema = "RISK_ENGINE"\n'
+        "```"
+    )
+    st.stop()
+
+conn = st.connection("snowflake", type="snowflake")
 
 DB = "AML_COPILOT_DB"
 SCHEMA = "RISK_ENGINE"
